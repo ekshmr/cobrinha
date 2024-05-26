@@ -5,7 +5,7 @@
 - [x] Criar o arquivo principal do jogo.
 
 ## 2. Tabuleiro do Jogo
-- [ ] Definir as dimensões do tabuleiro.
+- [x] Definir as dimensões do tabuleiro.
 
 ## 3. Cobrinha
 - [ ] Definir a estrutura da cobrinha.
