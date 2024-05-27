@@ -13,6 +13,14 @@ const largura = 25
 
 var tabuleiro = [largura][comprimento]string{}
 
+type cobra struct {
+	tamanho   int
+	posicao_X int
+	posicao_Y int
+}
+
+var tamanho_cobrinha = 2
+
 func limpar_console() {
 	cmd := exec.Command("cmd", "/c", "cls")
 	cmd.Stdout = os.Stdout
@@ -47,29 +55,53 @@ func desenhar() {
 	fmt.Print(output.String())
 }
 
-func main() {
+func posicionar_cobrinha(cobrinha1 cobra) {
+	for i := 0; i < tamanho_cobrinha; i++ {
+		tabuleiro[cobrinha1.posicao_Y][cobrinha1.posicao_X+i] = "*"
+	}
+}
 
-	var exit = false
+func mover_cobrinha(cobrinha2 *cobra) {
+	if cobrinha2.posicao_X != comprimento {
+		cobrinha2.posicao_X++
+	}
+}
 
+func limpar_tabuleiro() {
 	for i := range tabuleiro {
 		for o := range tabuleiro[i] {
 			tabuleiro[i][o] = " "
 		}
 	}
+}
 
-	var teste_pisca = 0
+func main() {
+	var cobrinha cobra
+	cobrinha.tamanho = 2
+	cobrinha.posicao_X = comprimento / 2
+	cobrinha.posicao_Y = largura / 2
 
-	for exit != true {
+	var exit = false
+
+	posicionar_cobrinha(cobrinha)
+	//var teste_pisca = 0
+
+	for !exit {
+		limpar_tabuleiro()
+		posicionar_cobrinha(cobrinha)
 		desenhar()
-		time.Sleep(10 * time.Millisecond)
-		if teste_pisca < 5 {
-			teste_pisca++
-		} else {
-			if tabuleiro[10][10] == " " {
-				tabuleiro[10][10] = "*"
+		time.Sleep(500 * time.Millisecond)
+		mover_cobrinha(&cobrinha)
+
+		/*
+			if teste_pisca < 5 {
+				teste_pisca++
 			} else {
-				tabuleiro[10][10] = " "
-			}
-		}
+				if tabuleiro[10][10] == " " {
+					tabuleiro[10][10] = "*"
+				} else {
+					tabuleiro[10][10] = " "
+				}
+			}*/
 	}
 }
